@@ -46,9 +46,9 @@ const StockChart: React.FC<StockChartProps> = ({ priceHistory, avgPurchasePrice 
           const price = minPrice + (priceRange / numHorizontalGridLines) * i;
           const y = getY(price);
           return (
-            <g key={`h-grid-${i}`} className="text-gray-400 text-xs">
+            <g key={`h-grid-${i}`} className="text-xs">
               <line x1={padding.left} y1={y} x2={width - padding.right} y2={y} />
-              <text x={padding.left - 8} y={y + 4} textAnchor="end" fontSize="12" fill="currentColor">
+              <text x={padding.left - 8} y={y + 4} textAnchor="end" fontSize="12" fill="black" stroke="none">
                 {(Math.round(price / 100) * 100).toLocaleString()}
               </text>
             </g>

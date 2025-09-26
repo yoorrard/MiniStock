@@ -19,7 +19,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolio, stocks, day }) => {
       const purchaseValue = item.shares * item.avgPurchasePrice;
       const profit = currentValue - purchaseValue;
       const profitRate = purchaseValue > 0 ? (profit / purchaseValue) * 100 : 0;
-      return { ...item, stock, currentPrice, currentValue, profit, profitRate };
+      return { ...item, stock, currentPrice, currentValue, purchaseValue, profit, profitRate };
     })
     .filter(Boolean);
 
@@ -50,8 +50,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolio, stocks, day }) => {
               </div>
               <div className="flex justify-between items-baseline mt-1">
                 <div className="text-sm text-gray-600">
-                  <p>평가액: {formatCurrency(Math.round(item.currentValue))}원</p>
-                  <p>평단가: {formatCurrency(Math.round(item.avgPurchasePrice))}원</p>
+                  <p>평가 금액: {formatCurrency(Math.round(item.currentValue))}원</p>
+                  <p>매입 금액: {formatCurrency(Math.round(item.purchaseValue))}원</p>
                 </div>
                 <div className={`text-right font-semibold ${profitColor}`}>
                   <p>{item.profit >= 0 ? '▲' : '▼'} {formatCurrency(Math.round(Math.abs(item.profit)))}원</p>
