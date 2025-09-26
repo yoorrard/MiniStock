@@ -50,8 +50,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ portfolio, stocks, day }) => {
               </div>
               <div className="flex justify-between items-baseline mt-1">
                 <div className="text-sm text-gray-600">
-                  <p>평가 금액: {formatCurrency(Math.round(item.currentValue))}원</p>
-                  <p>매입 금액: {formatCurrency(Math.round(item.purchaseValue))}원</p>
+                  <p>평가금액: {formatCurrency(Math.round(item.currentValue))}원</p>
+                  <p>매입금액: {formatCurrency(Math.round(item.purchaseValue))}원</p>
                 </div>
                 <div className={`text-right font-semibold ${profitColor}`}>
                   <p>{item.profit >= 0 ? '▲' : '▼'} {formatCurrency(Math.round(Math.abs(item.profit)))}원</p>

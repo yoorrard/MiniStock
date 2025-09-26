@@ -148,7 +148,7 @@ const App: React.FC = () => {
             }}
             className="bg-green-500 text-white font-bold py-3 px-6 text-lg sm:py-4 sm:px-8 sm:text-xl rounded-full hover:bg-green-600 transition-transform transform hover:scale-105 shadow-lg"
           >
-            {isLastDay ? '최종 결과 보기' : `다음 날로 (${day}/${simulationDays})`}
+            {isLastDay ? '최종 결과 보기' : `다음 날로 이동 (${day}/${simulationDays})`}
           </button>
       </footer>
 

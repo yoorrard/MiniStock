@@ -37,7 +37,7 @@ const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame }) => {
                 />
             </div>
             <div className="animate-slideInUp" style={{ animationDelay: '300ms' }}>
-                <label htmlFor="simulationDays" className="text-base sm:text-lg font-semibold text-gray-800 mb-2 block">활동일수를 선택하세요. (5일 ~ 365일)</label>
+                <label htmlFor="simulationDays" className="text-base sm:text-lg font-semibold text-gray-800 mb-2 block">투자일수를 선택하세요. (5일 ~ 365일)</label>
                 <input 
                     id="simulationDays"
                     type="number"
