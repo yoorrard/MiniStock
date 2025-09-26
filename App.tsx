@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Header from './components/Header';
 import StockList from './components/StockList';
 import Portfolio from './components/Portfolio';
@@ -7,11 +7,30 @@ import SetupScreen from './components/SetupScreen';
 import GameEndScreen from './components/GameEndScreen';
 import NewsModal from './components/NewsModal';
 import GlossaryModal from './components/GlossaryModal';
+import WelcomeScreen from './components/WelcomeScreen';
+import ExitConfirmationModal from './components/ExitConfirmationModal';
 import { generateAllStockData } from './services/stockService';
 import type { Stock, PortfolioItem, NewsEvent } from './types';
 
+// Define the shape of the saved game data
+interface SavedGameState {
+  gameState: 'playing' | 'finished';
+  day: number;
+  cash: number;
+  initialAssets: number;
+  portfolio: PortfolioItem[];
+  playerName: string;
+  simulationDays: number;
+  stockData: Stock[];
+}
+
+const SAVE_GAME_KEY = 'kidsStockKingSaveData';
+
+
 const App: React.FC = () => {
-  const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
+  const [gameState, setGameState] = useState<'setup' | 'welcome' | 'playing' | 'finished'>('setup');
+  const [savedGameData, setSavedGameData] = useState<SavedGameState | null>(null);
+
   const [day, setDay] = useState<number>(1);
   const [cash, setCash] = useState<number>(0);
   const [initialAssets, setInitialAssets] = useState<number>(0);
@@ -23,7 +42,68 @@ const App: React.FC = () => {
   const [stockData, setStockData] = useState<Stock[]>([]);
   const [activeNews, setActiveNews] = useState<NewsEvent | null>(null);
   const [isGlossaryOpen, setIsGlossaryOpen] = useState<boolean>(false);
+  const [isExitConfirmOpen, setIsExitConfirmOpen] = useState<boolean>(false);
 
+  // On initial load, check for saved data and show a welcome screen if it exists.
+  useEffect(() => {
+    try {
+      const savedDataString = localStorage.getItem(SAVE_GAME_KEY);
+      if (savedDataString) {
+        const savedData: SavedGameState = JSON.parse(savedDataString);
+        setSavedGameData(savedData);
+        setGameState('welcome');
+      }
+    } catch (error) {
+      console.error("Failed to load game state from localStorage:", error);
+      localStorage.removeItem(SAVE_GAME_KEY);
+    }
+  }, []);
+
+  // Save game state to localStorage whenever it changes
+  useEffect(() => {
+    if (gameState === 'playing' || gameState === 'finished') {
+      try {
+        const dataToSave: SavedGameState = {
+          gameState,
+          day,
+          cash,
+          initialAssets,
+          portfolio,
+          playerName,
+          simulationDays,
+          stockData,
+        };
+        localStorage.setItem(SAVE_GAME_KEY, JSON.stringify(dataToSave));
+      } catch (error) {
+        console.error("Failed to save game state to localStorage:", error);
+      }
+    }
+  }, [gameState, day, cash, initialAssets, portfolio, playerName, simulationDays, stockData]);
+
+
+  const handleContinueGame = useCallback(() => {
+    if (savedGameData) {
+      setPlayerName(savedGameData.playerName);
+      setSimulationDays(savedGameData.simulationDays);
+      setStockData(savedGameData.stockData);
+      setCash(savedGameData.cash);
+      setInitialAssets(savedGameData.initialAssets);
+      setPortfolio(savedGameData.portfolio);
+      setDay(savedGameData.day);
+      setGameState(savedGameData.gameState);
+      setSavedGameData(null); // Clear temporary data
+    }
+  }, [savedGameData]);
+
+  const handleStartNewGame = useCallback(() => {
+    try {
+        localStorage.removeItem(SAVE_GAME_KEY);
+    } catch (error) {
+        console.error("Failed to remove saved game data from localStorage:", error);
+    }
+    setSavedGameData(null);
+    setGameState('setup');
+  }, []);
 
   const handleStartGame = useCallback((name: string, startCash: number, days: number) => {
     setPlayerName(name);
@@ -37,14 +117,28 @@ const App: React.FC = () => {
   }, []);
 
   const handleRestartGame = useCallback(() => {
-    setGameState('setup');
+    handleStartNewGame();
+  }, [handleStartNewGame]);
+
+  const handleOpenExitConfirm = useCallback(() => {
+    setIsExitConfirmOpen(true);
   }, []);
+
+  const handleCloseExitConfirm = useCallback(() => {
+    setIsExitConfirmOpen(false);
+  }, []);
+
+  const handleConfirmExit = useCallback(() => {
+    handleRestartGame();
+    setIsExitConfirmOpen(false);
+  }, [handleRestartGame]);
+
 
   const stockValue = useMemo(() => {
     if (stockData.length === 0) return 0;
     return portfolio.reduce((total, item) => {
       const stock = stockData.find(s => s.code === item.stockCode);
-      if (stock) {
+      if (stock && stock.priceHistory && stock.priceHistory.length >= day) {
         total += item.shares * stock.priceHistory[day - 1];
       }
       return total;
@@ -117,8 +211,28 @@ const App: React.FC = () => {
     }
   }, []);
 
+  if (gameState === 'welcome' && savedGameData) {
+    return (
+      <WelcomeScreen
+        playerName={savedGameData.playerName}
+        onContinue={handleContinueGame}
+        onStartNew={handleStartNewGame}
+      />
+    );
+  }
+
   if (gameState === 'setup') {
     return <SetupScreen onStartGame={handleStartGame} />;
+  }
+  
+  // Display a loading screen if game state is 'playing' but stock data isn't ready.
+  // This can happen briefly when reloading a saved game.
+  if (gameState === 'playing' && stockData.length === 0) {
+      return (
+          <div className="flex items-center justify-center min-h-screen bg-gray-100">
+              <p className="text-xl font-semibold">저장된 게임을 불러오는 중...</p>
+          </div>
+      );
   }
 
   if (gameState === 'finished') {
@@ -148,7 +262,13 @@ const App: React.FC = () => {
         <Portfolio portfolio={portfolio} stocks={stockData} day={day} />
       </main>
 
-      <footer className="mt-6 text-center">
+      <footer className="mt-6 flex justify-center items-center gap-4">
+          <button
+            onClick={handleOpenExitConfirm}
+            className="bg-red-500 text-white font-bold py-3 px-6 text-lg sm:py-4 sm:px-8 sm:text-xl rounded-full hover:bg-red-600 transition-transform transform hover:scale-105 shadow-lg"
+          >
+            활동 종료
+          </button>
           <button 
             onClick={() => {
               if (isLastDay) {
@@ -184,6 +304,13 @@ const App: React.FC = () => {
 
       {isGlossaryOpen && (
         <GlossaryModal onClose={handleCloseGlossary} />
+      )}
+
+      {isExitConfirmOpen && (
+        <ExitConfirmationModal
+            onConfirm={handleConfirmExit}
+            onCancel={handleCloseExitConfirm}
+        />
       )}
     </div>
   );
