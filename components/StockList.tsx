@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Stock } from '../types';
 import { NewsIcon } from './icons';
@@ -24,17 +23,17 @@ const StockListItem: React.FC<StockListItemProps> = ({ stock, day, onSelect }) =
 
   return (
     <tr className="border-b border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors duration-200" onClick={() => onSelect(stock)}>
-      <td className="p-3">
+      <td className="px-2 py-3 sm:px-3">
         <div className="flex items-center gap-2">
-            <p className="font-bold text-gray-800">{stock.name}</p>
+            <p className="font-bold text-gray-800 text-sm sm:text-base">{stock.name}</p>
             {hasNewsToday && <NewsIcon />}
         </div>
-        <p className="text-xs text-gray-500">{stock.sector}</p>
+        <p className="text-[11px] sm:text-xs text-gray-500">{stock.sector}</p>
       </td>
-      <td className="p-3 text-right font-semibold text-lg">{formatCurrency(currentPrice)}</td>
-      <td className={`p-3 text-right font-semibold ${changeColor}`}>
-        <p>{changeIcon} {formatCurrency(Math.abs(change))}</p>
-        <p className="text-sm">({changeRate.toFixed(2)}%)</p>
+      <td className="px-2 py-3 sm:px-3 text-right font-semibold text-base sm:text-lg">{formatCurrency(currentPrice)}</td>
+      <td className={`px-2 py-3 sm:px-3 text-right font-semibold ${changeColor}`}>
+        <p className="text-sm">{changeIcon} {formatCurrency(Math.abs(change))}</p>
+        <p className="text-xs sm:text-sm">({changeRate.toFixed(2)}%)</p>
       </td>
     </tr>
   );
@@ -49,15 +48,15 @@ interface StockListProps {
 
 const StockList: React.FC<StockListProps> = ({ stocks, day, onStockSelect }) => {
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg">
+    <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
       <h2 className="text-xl font-bold mb-4 text-gray-800">주식 시장</h2>
       <div className="overflow-y-auto max-h-[60vh]">
         <table className="w-full text-left">
           <thead className="sticky top-0 bg-white z-10">
             <tr className="border-b-2 border-gray-300">
-              <th className="p-3 text-sm font-bold text-gray-500 uppercase tracking-wider">종목명</th>
-              <th className="p-3 text-sm font-bold text-gray-500 uppercase tracking-wider text-right">현재가</th>
-              <th className="p-3 text-sm font-bold text-gray-500 uppercase tracking-wider text-right">등락</th>
+              <th className="px-2 py-3 sm:px-3 text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">종목명</th>
+              <th className="px-2 py-3 sm:px-3 text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider text-right">현재가</th>
+              <th className="px-2 py-3 sm:px-3 text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider text-right">등락</th>
             </tr>
           </thead>
           <tbody>

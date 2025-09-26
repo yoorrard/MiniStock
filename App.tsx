@@ -124,7 +124,7 @@ const App: React.FC = () => {
   const isLastDay = day >= simulationDays;
 
   return (
-    <div className="container mx-auto p-4 md:p-6 font-sans">
+    <div className="container mx-auto p-2 sm:p-4 md:p-6 font-sans">
       <Header 
         day={day} 
         cash={cash} 
@@ -132,7 +132,7 @@ const App: React.FC = () => {
         initialAssets={initialAssets}
       />
       
-      <main className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <main className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <StockList stocks={stockData} day={day} onStockSelect={handleStockSelect} />
         <Portfolio portfolio={portfolio} stocks={stockData} day={day} />
       </main>
@@ -146,9 +146,9 @@ const App: React.FC = () => {
                 handleNextDay();
               }
             }}
-            className="bg-green-500 text-white font-bold py-4 px-8 rounded-full text-xl hover:bg-green-600 transition-transform transform hover:scale-105 shadow-lg"
+            className="bg-green-500 text-white font-bold py-3 px-6 text-lg sm:py-4 sm:px-8 sm:text-xl rounded-full hover:bg-green-600 transition-transform transform hover:scale-105 shadow-lg"
           >
-            {isLastDay ? '최종 결과 보기' : `다음 날로 이동하기 (${day}/${simulationDays})`}
+            {isLastDay ? '최종 결과 보기' : `다음 날로 (${day}/${simulationDays})`}
           </button>
       </footer>
 

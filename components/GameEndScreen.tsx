@@ -36,46 +36,46 @@ const GameEndScreen: React.FC<GameEndScreenProps> = ({ playerName, initialAssets
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 font-sans p-4">
-      <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl w-full max-w-2xl mx-auto animate-fadeIn">
-        <div ref={reportRef} className="p-4 sm:p-8 bg-white">
+      <div className="bg-white p-6 md:p-12 rounded-2xl shadow-xl w-full max-w-2xl mx-auto animate-fadeIn">
+        <div ref={reportRef} className="p-2 sm:p-4 md:p-8 bg-white">
             <header className="text-center border-b-2 pb-4 mb-6">
-            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500">🚀 최종 투자 보고서</h1>
-            <p className="text-xl text-gray-700 mt-2">{playerName}님의 투자 여정이 끝났습니다!</p>
+            <h1 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500">🚀 최종 투자 보고서</h1>
+            <p className="text-base sm:text-xl text-gray-700 mt-2">{playerName}님의 투자 여정이 끝났습니다!</p>
             </header>
             
-            <main className="space-y-6 text-lg">
-            <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+            <main className="space-y-4 sm:space-y-6 text-base sm:text-lg">
+            <div className="flex justify-between items-center bg-gray-50 p-3 sm:p-4 rounded-lg">
                 <span className="font-semibold text-gray-600">초기 자본</span>
-                <span className="font-bold text-2xl text-gray-800">{formatCurrency(initialAssets)}원</span>
+                <span className="font-bold text-xl sm:text-2xl text-gray-800">{formatCurrency(initialAssets)}원</span>
             </div>
-            <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+            <div className="flex justify-between items-center bg-gray-50 p-3 sm:p-4 rounded-lg">
                 <span className="font-semibold text-gray-600">최종 자산</span>
-                <span className="font-bold text-2xl text-gray-800">{formatCurrency(finalAssets)}원</span>
+                <span className="font-bold text-xl sm:text-2xl text-gray-800">{formatCurrency(finalAssets)}원</span>
             </div>
-            <div className={`flex justify-between items-center p-4 rounded-lg ${profit >= 0 ? 'bg-red-50' : 'bg-blue-50'}`}>
+            <div className={`flex justify-between items-center p-3 sm:p-4 rounded-lg ${profit >= 0 ? 'bg-red-50' : 'bg-blue-50'}`}>
                 <span className={`font-semibold ${profitColor}`}>수익금 (수익률)</span>
-                <div className={`text-right font-bold text-2xl ${profitColor}`}>
+                <div className={`text-right font-bold text-xl sm:text-2xl ${profitColor}`}>
                 <p>{profit >= 0 ? '+' : ''}{formatCurrency(profit)}원</p>
-                <p className="text-lg">({profitRate.toFixed(2)}%)</p>
+                <p className="text-base sm:text-lg">({profitRate.toFixed(2)}%)</p>
                 </div>
             </div>
             </main>
 
             <footer className="text-center mt-8 pt-4 border-t-2">
-            <p className="text-2xl font-semibold text-gray-800">{resultMessage}</p>
+            <p className="text-xl sm:text-2xl font-semibold text-gray-800">{resultMessage}</p>
             </footer>
         </div>
         
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
             <button
             onClick={handleDownloadPdf}
-            className="w-full sm:w-auto bg-white border-2 border-blue-600 text-blue-600 font-bold py-3 px-6 rounded-full text-lg hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-md"
+            className="w-full sm:w-auto bg-white border-2 border-blue-600 text-blue-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-md"
             >
             PDF로 저장
             </button>
             <button
               onClick={onRestart}
-              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 px-8 rounded-full text-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               다시하기
             </button>
