@@ -6,6 +6,7 @@ import TradingModal from './components/TradingModal';
 import SetupScreen from './components/SetupScreen';
 import GameEndScreen from './components/GameEndScreen';
 import NewsModal from './components/NewsModal';
+import GlossaryModal from './components/GlossaryModal';
 import { generateAllStockData } from './services/stockService';
 import type { Stock, PortfolioItem, NewsEvent } from './types';
 
@@ -21,6 +22,7 @@ const App: React.FC = () => {
   const [simulationDays, setSimulationDays] = useState<number>(0);
   const [stockData, setStockData] = useState<Stock[]>([]);
   const [activeNews, setActiveNews] = useState<NewsEvent | null>(null);
+  const [isGlossaryOpen, setIsGlossaryOpen] = useState<boolean>(false);
 
 
   const handleStartGame = useCallback((name: string, startCash: number, days: number) => {
@@ -69,6 +71,14 @@ const App: React.FC = () => {
 
   const handleCloseNews = useCallback(() => {
     setActiveNews(null);
+  }, []);
+
+  const handleShowGlossary = useCallback(() => {
+    setIsGlossaryOpen(true);
+  }, []);
+
+  const handleCloseGlossary = useCallback(() => {
+    setIsGlossaryOpen(false);
   }, []);
 
   const handleTrade = useCallback((stockCode: string, shares: number, price: number, type: 'buy' | 'sell') => {
@@ -130,6 +140,7 @@ const App: React.FC = () => {
         cash={cash} 
         stockValue={stockValue} 
         initialAssets={initialAssets}
+        onShowGlossary={handleShowGlossary}
       />
       
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
@@ -169,6 +180,10 @@ const App: React.FC = () => {
             news={activeNews}
             onClose={handleCloseNews}
         />
+      )}
+
+      {isGlossaryOpen && (
+        <GlossaryModal onClose={handleCloseGlossary} />
       )}
     </div>
   );
