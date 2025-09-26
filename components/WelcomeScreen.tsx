@@ -13,7 +13,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ playerName, onContinue, o
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500">
           🚀 다시 오셨군요!
         </h1>
-        <p className="text-lg sm:text-xl text-gray-700 mb-8">
+        <p className="text-lg sm:text-xl text-gray-700 mb-8 break-keep">
           <span className="font-bold">{playerName}</span>님, 지난번에 진행하던 게임 기록이 남아있어요.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
