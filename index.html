@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>어린이 주식왕</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .animate-slideInUp { animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .animate-subtlePulse { animation: subtlePulse 2s infinite; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "jspdf": "https://cdn.skypack.dev/jspdf",
+    "html2canvas": "https://cdn.skypack.dev/html2canvas"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-100 antialiased">
+    <div id="root"></div>
+  </body>
+</html>
