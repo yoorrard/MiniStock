@@ -82,15 +82,15 @@ const TradingModal: React.FC<TradingModalProps> = ({ stock, day, cash, portfolio
           <div className="bg-gray-200 rounded-full p-1 flex">
             <button
               onClick={() => setTradeType('buy')}
-              className={`px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 ${tradeType === 'buy' ? 'bg-blue-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-300'}`}
+              className={`px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 ${tradeType === 'buy' ? 'bg-red-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-300'}`}
             >
-              사기
+              매수
             </button>
             <button
               onClick={() => setTradeType('sell')}
-              className={`px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 ${tradeType === 'sell' ? 'bg-red-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-300'}`}
+              className={`px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-base sm:text-lg font-semibold transition-all duration-300 ${tradeType === 'sell' ? 'bg-blue-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-300'}`}
             >
-              팔기
+              매도
             </button>
           </div>
         </div>
@@ -98,8 +98,8 @@ const TradingModal: React.FC<TradingModalProps> = ({ stock, day, cash, portfolio
         <div className="space-y-4">
             <div className="text-sm text-center">
                 {tradeType === 'buy' ? 
-                 <p>보유 현금: {formatCurrency(cash)}원 (최대 {maxBuyableShares}주 구매 가능)</p> :
-                 <p>보유 수량: {sharesOwned}주 (최대 {maxSellableShares}주 판매 가능)</p>
+                 <p>보유 현금: {formatCurrency(cash)}원 (최대 {maxBuyableShares}주 매수 가능)</p> :
+                 <p>보유 수량: {sharesOwned}주 (최대 {maxSellableShares}주 매도 가능)</p>
                 }
             </div>
 
@@ -115,7 +115,7 @@ const TradingModal: React.FC<TradingModalProps> = ({ stock, day, cash, portfolio
             </div>
 
             <div className="text-center">
-                <p className="text-gray-600 text-sm sm:text-base">총 {tradeType === 'buy' ? '주문' : '판매'} 금액</p>
+                <p className="text-gray-600 text-sm sm:text-base">총 {tradeType === 'buy' ? '매수' : '매도'} 금액</p>
                 <p className="text-xl sm:text-2xl font-bold text-gray-800">{formatCurrency(totalAmount)}원</p>
             </div>
         </div>
@@ -126,11 +126,11 @@ const TradingModal: React.FC<TradingModalProps> = ({ stock, day, cash, portfolio
             disabled={tradeType === 'buy' ? !canBuy : !canSell}
             className={`w-full py-3 sm:py-4 rounded-xl text-white font-bold text-lg sm:text-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:cursor-not-allowed ${
               tradeType === 'buy'
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 disabled:from-gray-400 disabled:to-gray-500'
-                : 'bg-gradient-to-r from-red-600 to-rose-600 disabled:from-gray-400 disabled:to-gray-500'
+                ? 'bg-gradient-to-r from-red-600 to-rose-600 disabled:from-gray-400 disabled:to-gray-500'
+                : 'bg-gradient-to-r from-blue-600 to-indigo-600 disabled:from-gray-400 disabled:to-gray-500'
             }`}
           >
-            {shares}주 {tradeType === 'buy' ? '사기' : '팔기'}
+            {shares}주 {tradeType === 'buy' ? '매수' : '매도'}
           </button>
         </div>
       </div>
