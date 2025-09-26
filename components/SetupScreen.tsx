@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GuideModal from './GuideModal';
 
 interface SetupScreenProps {
   onStartGame: (name: string, initialCash: number, days: number) => void;
@@ -9,6 +10,7 @@ const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame }) => {
   const [simulationDays, setSimulationDays] = useState(30);
   const [initialCash, setInitialCash] = useState(10000000);
   const [hasAgreed, setHasAgreed] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   
   const cashOptions = [1000000, 5000000, 10000000, 50000000, 100000000];
   const formatCurrency = (amount: number) => new Intl.NumberFormat('ko-KR').format(amount);
@@ -95,16 +97,25 @@ const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame }) => {
             </label>
         </div>
 
-        <div className="animate-slideInUp" style={{ animationDelay: '600ms' }}>
-          <button
-            onClick={() => onStartGame(playerName, initialCash, simulationDays)}
-            disabled={!isStartable}
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 px-8 rounded-full text-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mt-8 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:transform-none"
-          >
-            투자 시작하기!
-          </button>
+        <div className="mt-8 animate-slideInUp" style={{ animationDelay: '600ms' }}>
+          <div className="space-y-3">
+            <button
+              onClick={() => onStartGame(playerName, initialCash, simulationDays)}
+              disabled={!isStartable}
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 px-8 rounded-full text-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              투자 시작하기!
+            </button>
+            <button
+                onClick={() => setIsGuideOpen(true)}
+                className="w-full text-gray-700 font-semibold py-3 px-6 rounded-full text-base hover:bg-gray-100 transition-all duration-300 border border-gray-300"
+            >
+                사용법 안내
+            </button>
+          </div>
         </div>
       </div>
+      {isGuideOpen && <GuideModal onClose={() => setIsGuideOpen(false)} />}
     </div>
   );
 };
