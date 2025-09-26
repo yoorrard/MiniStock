@@ -35,7 +35,7 @@ const GameEndScreen: React.FC<GameEndScreenProps> = ({ playerName, initialAssets
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 font-sans p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-6 md:p-12 rounded-2xl shadow-xl w-full max-w-2xl mx-auto animate-fadeIn">
         <div ref={reportRef} className="p-2 sm:p-4 md:p-8 bg-white">
             <header className="text-center border-b-2 pb-4 mb-6">

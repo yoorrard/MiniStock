@@ -134,7 +134,7 @@ const App: React.FC = () => {
   const isLastDay = day >= simulationDays;
 
   return (
-    <div className="container mx-auto p-2 sm:p-4 md:p-6 font-sans">
+    <div className="container mx-auto p-2 sm:p-4 md:p-6">
       <Header 
         day={day} 
         cash={cash} 
