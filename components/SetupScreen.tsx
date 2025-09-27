@@ -114,6 +114,11 @@ const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame }) => {
             </button>
           </div>
         </div>
+        
+        <footer className="mt-10 text-center text-xs text-gray-400 animate-slideInUp" style={{ animationDelay: '700ms' }}>
+            <p>© 2025 어린이 주식왕. All Rights Reserved.</p>
+            <p className="mt-1">Created by 유영재</p>
+        </footer>
       </div>
       {isGuideOpen && <GuideModal onClose={() => setIsGuideOpen(false)} />}
     </div>
